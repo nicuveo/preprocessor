@@ -17,6 +17,7 @@
 # include <boost/preprocessor/array/size.hpp>
 # include <boost/preprocessor/tuple/elem.hpp>
 # include <boost/preprocessor/identity.hpp>
+# include <boost/preprocessor/limits.hpp>
 # include <boost/preprocessor/while.hpp>
 # include <boost/preprocessor/inc.hpp>
 # include <boost/preprocessor/cat.hpp>
