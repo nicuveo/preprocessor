@@ -18,7 +18,7 @@
 # include <boost/preprocessor/control/iif.hpp>
 # include <boost/preprocessor/array/elem.hpp>
 # include <boost/preprocessor/array/size.hpp>
-# include <boost/preprocessor/discard.hpp>
+# include <boost/preprocessor/identity.hpp>
 
 
 
@@ -32,7 +32,7 @@
   BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_ARRAY_SIZE(A1),              \
                               BOOST_PP_ARRAY_SIZE(A2)),             \
                BOOST_PP_CAT(BOOST_PP_AE_, BOOST_PP_ARRAY_SIZE(A1)), \
-               BOOST_PP_DISCARD_MIN_2)                              \
+               BOOST_PP_IDENTITY_N(0, 2))                           \
   (A1, A2)
 
 

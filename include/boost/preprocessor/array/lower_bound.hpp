@@ -16,7 +16,7 @@
 # include <boost/preprocessor/array/elem.hpp>
 # include <boost/preprocessor/array/size.hpp>
 # include <boost/preprocessor/tuple/elem.hpp>
-# include <boost/preprocessor/discard.hpp>
+# include <boost/preprocessor/identity.hpp>
 # include <boost/preprocessor/while.hpp>
 # include <boost/preprocessor/inc.hpp>
 # include <boost/preprocessor/cat.hpp>
@@ -40,7 +40,7 @@
 ** Internal helpers
 */
 
-# define BOOST_PP_ALB_ARRAY_ELEM_IMPLEM(D, A, S, I) BOOST_PP_IF(BOOST_PP_LESS_D(D, I, S), BOOST_PP_ARRAY_ELEM, BOOST_PP_DISCARD_MAX_2)(I, A)
+# define BOOST_PP_ALB_ARRAY_ELEM_IMPLEM(D, A, S, I) BOOST_PP_IF(BOOST_PP_LESS_D(D, I, S), BOOST_PP_ARRAY_ELEM, BOOST_PP_IDENTITY_N(BOOST_PP_LIMIT_MAG, 2))(I, A)
 
 # define BOOST_PP_ALB_ARRAY_ELEM(D, S) BOOST_PP_ALB_ARRAY_ELEM_IMPLEM(D, BOOST_PP_ALB_ARRAY(S), BOOST_PP_ALB_ARRAY_SIZE(S), BOOST_PP_ALB_INDEX(S))
 # define BOOST_PP_ALB_ARRAY_SIZE(S)    BOOST_PP_ARRAY_SIZE(BOOST_PP_ALB_ARRAY(S))
