@@ -47,16 +47,16 @@
 #  define BOOST_PP_TS_PRED_1(D,T,I) BOOST_PP_LESS_D(D, I, BOOST_PP_TUPLE_SIZE(T))
 
 #  define BOOST_PP_TS_OP_0(D,S)         BOOST_PP_TS_OP_1(D, BOOST_PP_TUPLE_ELEM(3,0,S), BOOST_PP_TUPLE_ELEM(3,1,S), BOOST_PP_TUPLE_ELEM(3,2,S))
-#  define BOOST_PP_TS_OP_1(D,T,I,R)     BOOST_PP_YS_OP_2(D, T, I, R, BOOST_PP_TUPLE_ELEM(I, R))
+#  define BOOST_PP_TS_OP_1(D,T,I,R)     BOOST_PP_TS_OP_2(D, T, I, R, BOOST_PP_TUPLE_ELEM(I, T))
 #  define BOOST_PP_TS_OP_2(D,T,I,R,X)   (T,                             \
                                          BOOST_PP_INC(I),               \
                                          BOOST_PP_ARRAY_INSERT(D, R, BOOST_PP_ARRAY_LOWER_BOUND_D(D,R,X), X))
 
 #  define BOOST_PP_TS_OP_0_U(D,S)       BOOST_PP_TS_OP_1_U(D, BOOST_PP_TUPLE_ELEM(3,0,S), BOOST_PP_TUPLE_ELEM(3,1,S), BOOST_PP_TUPLE_ELEM(3,2,S))
-#  define BOOST_PP_TS_OP_1_U(D,T,I,R)   BOOST_PP_YS_OP_2_U(D, T, I, R, BOOST_PP_TUPLE_ELEM(I, R))
+#  define BOOST_PP_TS_OP_1_U(D,T,I,R)   BOOST_PP_TS_OP_2_U(D, T, I, R, BOOST_PP_TUPLE_ELEM(I, T))
 #  define BOOST_PP_TS_OP_2_U(D,T,I,R,X) (T,                             \
                                          BOOST_PP_INC(I),               \
-                                         BOOST_PP_TS_MERGE_U(D, X, R, BOOST_PP_ARRAY_LOWER_BOUND_D(D, R, X)))
+                                         BOOST_PP_TS_MERGE_U(D, R, BOOST_PP_ARRAY_LOWER_BOUND_D(D,R,X), X))
 
 
 
