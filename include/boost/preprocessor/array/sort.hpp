@@ -12,8 +12,17 @@
 
 
 
-# include <boost/preprocessor/array/lower_bound.hpp>
-# include <boost/preprocessor/array/insert.hpp>
+# include <boost/preprocessor/tuple/elem.hpp>
+# include <boost/preprocessor/array/push_back.hpp>
+# include <boost/preprocessor/array/remove.hpp>
+# include <boost/preprocessor/array/elem.hpp>
+# include <boost/preprocessor/array/size.hpp>
+# include <boost/preprocessor/array/cat.hpp>
+# include <boost/preprocessor/comparison.hpp>
+# include <boost/preprocessor/while.hpp>
+# include <boost/preprocessor/if.hpp>
+
+
 
 /*
 ** BOOST_PP_ARRAY_SORT
@@ -44,8 +53,8 @@
 # define BOOST_PP_AS_OP_1(D,N,A,R,I)       BOOST_PP_AS_OP_2(D,N,A,R,I, BOOST_PP_INC(I))
 # define BOOST_PP_AS_OP_2(D,N,A,R,I,J)     BOOST_PP_AS_OP_3(D,N,A,R,I,J, BOOST_PP_ARRAY_ELEM(I,A), BOOST_PP_ARRAY_ELEM(J,A))
 # define BOOST_PP_AS_OP_3(D,N,A,R,I,J,X,Y) BOOST_PP_IIF(BOOST_PP_LESS_D(D,X,Y), BOOST_PP_AS_OP_X, BOOST_PP_AS_OP_Y)(D,N,A,R,I,J,X,Y)
-# define BOOST_PP_AS_OP_X(D,N,A,R,I,J,X,Y) (BOOST_PP_INC(I), N, BOOST_PP_ARRAY_REMOVE_D(D,A,I), BOOST_PP_ARRAY_INSERT_D(D,R,X))
-# define BOOST_PP_AS_OP_Y(D,N,A,R,I,J,X,Y) (BOOST_PP_INC(I), N, BOOST_PP_ARRAY_REMOVE_D(D,A,J), BOOST_PP_ARRAY_INSERT_D(D,R,Y))
+# define BOOST_PP_AS_OP_X(D,N,A,R,I,J,X,Y) (BOOST_PP_INC(I), N, BOOST_PP_ARRAY_REMOVE_D(D,A,I), BOOST_PP_ARRAY_PUSH_BACK(R,X))
+# define BOOST_PP_AS_OP_Y(D,N,A,R,I,J,X,Y) (BOOST_PP_INC(I), N, BOOST_PP_ARRAY_REMOVE_D(D,A,J), BOOST_PP_ARRAY_PUSH_BACK(R,Y))
 
 # define BOOST_PP_AS_OP_U_0(D,S)             BOOST_PP_AS_OP_U_1(D, BOOST_PP_TUPLE_ELEM(4,1,S), BOOST_PP_TUPLE_ELEM(4,2,S), BOOST_PP_TUPLE_ELEM(4,3,S), BOOST_PP_TUPLE_ELEM(4,0,S))
 # define BOOST_PP_AS_OP_U_1(D,N,A,R,I)       BOOST_PP_AS_OP_U_2(D,N,A,R,I, BOOST_PP_INC(I))
@@ -54,10 +63,12 @@
 # define BOOST_PP_AS_OP_U_X(D,N,A,R,I,J,X,Y) (BOOST_PP_INC(I), N, BOOST_PP_ARRAY_REMOVE_D(D,A,I), BOOST_PP_AS_PBIF_0(R,X))
 # define BOOST_PP_AS_OP_U_Y(D,N,A,R,I,J,X,Y) (BOOST_PP_INC(I), N, BOOST_PP_ARRAY_REMOVE_D(D,A,J), BOOST_PP_AS_PBIF_0(R,Y))
 
-# define BOOST_PP_AS_STEP(      A,N) BOOST_PP_TUPLE_ELEM(4,3, BOOST_PP_WHILE(                  BOOST_PP_AS_PRED_0, BOOST_PP_AS_OP_0,   (0,N,A,(0,()))))
-# define BOOST_PP_AS_STEP_U(    A,N) BOOST_PP_TUPLE_ELEM(4,3, BOOST_PP_WHILE(                  BOOST_PP_AS_PRED_0, BOOST_PP_AS_OP_U_0, (0,N,A,(0,()))))
-# define BOOST_PP_AS_STEP_D(  D,A,N) BOOST_PP_TUPLE_ELEM(4,3, BOOST_PP_CAT(BOOST_PP_WHILE_, D)(BOOST_PP_AS_PRED_0, BOOST_PP_AS_OP_0,   (0,N,A,(0,()))))
-# define BOOST_PP_AS_STEP_U_D(D,A,N) BOOST_PP_TUPLE_ELEM(4,3, BOOST_PP_CAT(BOOST_PP_WHILE_, D)(BOOST_PP_AS_PRED_0, BOOST_PP_AS_OP_U_0, (0,N,A,(0,()))))
+# define BOOST_PP_AS_STEP_RES(S) BOOST_PP_ARRAY_CAT(BOOST_PP_TUPLE_ELEM(4,3,S), BOOST_PP_TUPLE_ELEM(4,2,S))
+
+# define BOOST_PP_AS_STEP(      A,N) BOOST_PP_AS_STEP_RES(BOOST_PP_WHILE(                  BOOST_PP_AS_PRED_0, BOOST_PP_AS_OP_0,   (0,N,A,(0,()))))
+# define BOOST_PP_AS_STEP_U(    A,N) BOOST_PP_AS_STEP_RES(BOOST_PP_WHILE(                  BOOST_PP_AS_PRED_0, BOOST_PP_AS_OP_U_0, (0,N,A,(0,()))))
+# define BOOST_PP_AS_STEP_D(  D,A,N) BOOST_PP_AS_STEP_RES(BOOST_PP_CAT(BOOST_PP_WHILE_, D)(BOOST_PP_AS_PRED_0, BOOST_PP_AS_OP_0,   (0,N,A,(0,()))))
+# define BOOST_PP_AS_STEP_U_D(D,A,N) BOOST_PP_AS_STEP_RES(BOOST_PP_CAT(BOOST_PP_WHILE_, D)(BOOST_PP_AS_PRED_0, BOOST_PP_AS_OP_U_0, (0,N,A,(0,()))))
 
 # define BOOST_PP_AS_S_0(      A) A
 # define BOOST_PP_AS_S_U_0(    A) A
@@ -73,11 +84,6 @@
 # define BOOST_PP_AS_S_U_2(    A) BOOST_PP_AS_STEP_U(    A,1)
 # define BOOST_PP_AS_S_D_2(  D,A) BOOST_PP_AS_STEP_D(  D,A,1)
 # define BOOST_PP_AS_S_U_D_2(D,A) BOOST_PP_AS_STEP_U_D(D,A,1)
-
-# define BOOST_PP_AS_S_3(      A) BOOST_PP_AS_S_2(       BOOST_PP_AS_STEP(      A,2))
-# define BOOST_PP_AS_S_U_3(    A) BOOST_PP_AS_S_U_2(     BOOST_PP_AS_STEP_U(    A,2))
-# define BOOST_PP_AS_S_D_3(  D,A) BOOST_PP_AS_S_U_2(  D, BOOST_PP_AS_STEP_D(  D,A,2))
-# define BOOST_PP_AS_S_U_D_3(D,A) BOOST_PP_AS_S_U_D_2(D, BOOST_PP_AS_STEP_U_D(D,A,2))
 
 # define BOOST_PP_AS_S_3(      A) BOOST_PP_AS_S_2(       BOOST_PP_AS_STEP(      A,2))
 # define BOOST_PP_AS_S_U_3(    A) BOOST_PP_AS_S_U_2(     BOOST_PP_AS_STEP_U(    A,2))
